@@ -1,0 +1,11 @@
+{
+  "name": "node-crud-test",
+  "version": "1.0.0",
+  "description": "This is a CRUD test made in NodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@manudevelopia",
+  "license": "MIT",
+}
