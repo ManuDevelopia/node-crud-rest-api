@@ -6,5 +6,5 @@ app.listen(3000, function (){
 });
 
 app.get('/', function (req, res) {
-  res.send('Hello world!');
+  res.sendFile('/home/manu/Developer/Github/node-crud-test/www/index.html');
 });
