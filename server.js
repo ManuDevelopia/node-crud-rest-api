@@ -7,12 +7,14 @@ var db;
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
   res.sendFile('/home/manu/Developer/Github/node-crud-test/www/index.html');
+  var cursor = db.collection('projects').find();
 });
 
-app.post('/', (req, res) => {
+app.post('/projects', (req, res) => {
   console.log(req.body); 
 });
 
