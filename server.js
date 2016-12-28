@@ -1,15 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const mongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 var db;
+
+var ProjectCtrl = require('./controllers/project.js');
+var projects = express.Router();
 
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-mongoClient.connect('mongodb://localhost:27017/local', (err, database) => {
+mongoose.connect('mongodb://localhost:27017/local', (err, database) => {
   if (err){return console.log(err);}
 
   db = database;
@@ -18,12 +21,13 @@ mongoClient.connect('mongodb://localhost:27017/local', (err, database) => {
   }); 
 });
 
+// API
+//projects.route('/projects').get(ProjectCtrl.findAllProjects);
+app.get('/projects', ProjectCtrl.findAllProjects);
+
+
+
 app.get('/', function (req, res) {
-  var cursor = db.collection('projects').find()
-    .toArray(function (err, results){
-      console.log(results);
-  });
-  
   res.send({
     app: 'node-test', 
     ver: '0.1.0',
@@ -32,8 +36,8 @@ app.get('/', function (req, res) {
 
 });
 
-app.get('/projects', function (req, res){
-  res.sendFile('/home/manu/Developer/Github/node-crud-test/www/index.html');
+app.get('/project', function (req, res){
+  res.sendFile('/home/manu/Developer/Github/node-crud-rest-api/www/index.html');
 });
 
 app.post('/projects', (req, res) => {
