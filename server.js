@@ -22,7 +22,10 @@ mongoose.connect('mongodb://localhost:27017/local', (err, database) => {
 });
 
 // API
-//projects.route('/projects').get(ProjectCtrl.findAllProjects);
+projects.route('/projects').get(ProjectCtrl.findAllProjects);
+
+app.use('/api', projects);
+
 app.get('/projects', ProjectCtrl.findAllProjects);
 
 
