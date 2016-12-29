@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/local', (err, database) => {
+mongoose.connect('mongodb://localhost:27017/local', function(err, database) {
   if (err){return console.log(err);}
 
   db = database;
@@ -22,15 +22,22 @@ mongoose.connect('mongodb://localhost:27017/local', (err, database) => {
 });
 
 // API
-projects.route('/projects').get(ProjectCtrl.findAllProjects);
+projects.route('/projects')
+  .get(ProjectCtrl.findAll)
+  .post(ProjectCtrl.create);
+projects.route('/project/:id')
+  .get(ProjectCtrl.findById);
 
-app.use('/api', projects);
+app.use('/', projects); // TODO: maybe this coud be changed to /api instead of /
 
-app.get('/projects', ProjectCtrl.findAllProjects);
+app.get('/projects', ProjectCtrl.findAll);
 
 
+app.get('/', function(req, res){
+  res.redirect('/api');
+});
 
-app.get('/', function (req, res) {
+app.get('/api', function (req, res) {
   res.send({
     app: 'node-test', 
     ver: '0.1.0',
@@ -39,16 +46,8 @@ app.get('/', function (req, res) {
 
 });
 
-app.get('/project', function (req, res){
+app.get('/project/new', function (req, res){
   res.sendFile('/home/manu/Developer/Github/node-crud-rest-api/www/index.html');
 });
 
-app.post('/projects', (req, res) => {
-  db.collection('projects').save(req.body, (err, result) =>{
-    if (err) return console.log(err);
-  });
 
-  console.log('Saved in database');
-  res.redirect('/');
-
-});
