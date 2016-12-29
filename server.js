@@ -33,12 +33,6 @@ projects.route('/project/:id')
 
 app.use('/api', projects);
 
-app.get('/projects', ProjectCtrl.findAll);
-
-app.get('/', function(req, res){
-  res.redirect('/api');
-});
-
 app.get('/api', function (req, res) {
   res.send({
     app: 'node-test', 
@@ -47,9 +41,3 @@ app.get('/api', function (req, res) {
   });
 
 });
-
-app.get('/project/new', function (req, res){
-  res.sendFile('/home/manu/Developer/Github/node-crud-rest-api/www/index.html');
-});
-
-
