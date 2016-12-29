@@ -8,18 +8,6 @@ exports.findAll = function(req, res){
   });
 };
 
-// GET Project by ID
-exports.findById = function(req, res){
-  console.log('Petition for id: ' + req.params.id);
-  Project.findById(req.params.id, function(err, project){
-    if (err){
-      return res.send(500, err.message);
-    }
-  
-    res.status(200).jsonp(project);
-  });
-};
-
 // POST create a new Project
 exports.create = function(req, res){
   var project = new Project({
@@ -34,3 +22,44 @@ exports.create = function(req, res){
     res.status(200).jsonp(project);
   });
 }; 
+
+// GET Project by ID
+exports.findById = function(req, res){
+  Project.findById(req.params.id, function(err, project){
+    if (err){
+      return res.send(500, err.message);
+    }
+  
+    res.status(200).jsonp(project);
+  });
+};
+
+// POST Update a Project
+exports.update = function(req, res){
+  Project.findById(req.params.id, function(err, project){
+    project.name = req.body.name;
+  
+    project.save(function(err, project){
+    if (err){
+      res.send(500, err.message);
+    }
+
+    res.send(200).jsonp(project);
+    });
+  });
+
+};
+
+// DELETE Delete a Project
+exports.delete = function(req, res){
+  Project.findById(req.params.id, function(err, project){
+  
+    project.remove(function(err, project){
+    if (err){
+      res.send(500, err.message);
+    }
+
+    res.send(200).jsonp(project);
+    });
+  });
+};

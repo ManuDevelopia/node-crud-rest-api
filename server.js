@@ -25,13 +25,15 @@ mongoose.connect('mongodb://localhost:27017/local', function(err, database) {
 projects.route('/projects')
   .get(ProjectCtrl.findAll)
   .post(ProjectCtrl.create);
-projects.route('/project/:id')
-  .get(ProjectCtrl.findById);
 
-app.use('/', projects); // TODO: maybe this coud be changed to /api instead of /
+projects.route('/project/:id')
+  .get(ProjectCtrl.findById)
+  .put(ProjectCtrl.update)
+  .delete(ProjectCtrl.delete);
+
+app.use('/api', projects);
 
 app.get('/projects', ProjectCtrl.findAll);
-
 
 app.get('/', function(req, res){
   res.redirect('/api');
