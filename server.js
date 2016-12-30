@@ -3,8 +3,11 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
-var ProjectCtrl = require('./controllers/project.js');
+var ProjectCtrl = require('./controllers/project');
 var projects = express.Router();
+
+var userCtrl = require('./controllers/user');
+var users = express.Router();
 
 const app = express();
 
@@ -21,10 +24,13 @@ mongoose.connect('mongodb://localhost:27017/local', function(err, database) {
   }); 
 });
 
-// API
+// API - Project
 projects.route('/projects')
   .get(ProjectCtrl.findAll)
   .post(ProjectCtrl.create);
+
+projects.route('/projects/:name')
+  .get(ProjectCtrl.findByName);
 
 projects.route('/project/:id')
   .get(ProjectCtrl.findById)
@@ -33,6 +39,15 @@ projects.route('/project/:id')
 
 app.use('/api', projects);
 
+// API - User
+users.route('/users')
+  .get(userCtrl.findAll)
+  .post(userCtrl.create);
+
+app.use('/api', users);
+
+
+// Main
 app.get('/api', function (req, res) {
   res.send({
     app: 'node-test', 

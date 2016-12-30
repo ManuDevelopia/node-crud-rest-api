@@ -38,6 +38,17 @@ exports.findById = function(req, res){
   });
 };
 
+// GET Project by name
+exports.findByName = function(req, res){
+  Project.find({name: req.params.name}, function(err, project){
+    if (err){
+      return res.send(500, err.message);
+    }
+
+    res.status(200).jsonp(project);
+  });
+};
+
 // POST Update a Project
 exports.update = function(req, res){
   Project.findById(req.params.id, function(err, project){
@@ -45,7 +56,7 @@ exports.update = function(req, res){
   
     project.save(function(err, project){
     if (err){
-      res.send(500, err.message);
+      return res.send(500, err.message);
     }
 
     res.send(200).jsonp(project);
@@ -60,10 +71,10 @@ exports.delete = function(req, res){
   
     project.remove(function(err, project){
     if (err){
-      res.send(500, err.message);
+      return res.send(500, err.message);
     }
-
-    res.send(200).jsonp(project);
+    
+    res.status(200).jsonp(project);
     });
   });
 };
