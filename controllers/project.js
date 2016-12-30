@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
-var Project = require('../models/project.js');
+
+// Models
+var Project = require('../models/project');
+var User = require('../models/user');
 
 // GET all Projects from Databse
 exports.findAll = function(req, res){
@@ -11,7 +14,8 @@ exports.findAll = function(req, res){
 // POST create a new Project
 exports.create = function(req, res){
   var project = new Project({
-    name: req.body.name
+    name: req.body.name,
+    user: new User({name: 'Manu'})
   });
 
   project.save(function (err, project){
