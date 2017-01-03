@@ -19,7 +19,12 @@ exports.findById = function(req, res){
 
 exports.create = function(req, res){
   var user = new User({
-    name: req.body.name
+    name: req.body.name,
+    email: req.body.email,
+    password: require('crypto')
+                .createHash('sha1')
+                .update(req.body.password)
+                .digest('base64')
   });
 
   user.save(function(err, user){
