@@ -15,7 +15,7 @@ exports.findAll = function(req, res){
 exports.create = function(req, res){
   var project = new Project({
     name: req.body.name,
-    user: new User({name: 'Manu'})
+    user: '586aa3dbbf8eaf0bfb99459b'
   });
 
   project.save(function (err, project){
@@ -33,8 +33,9 @@ exports.findById = function(req, res){
     if (err){
       return res.send(500, err.message);
     }
-  
-    res.status(200).jsonp(project);
+    User.populate(project, {path: 'user'}, function(err, project){
+      res.status(200).jsonp(project);
+    }); 
   });
 };
 
