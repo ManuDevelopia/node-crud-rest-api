@@ -3,11 +3,14 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
-var ProjectCtrl = require('./controllers/project');
+var ProjectCtrl = require('./controllers/project.js');
 var projects = express.Router();
 
-var userCtrl = require('./controllers/user');
+var userCtrl = require('./controllers/user.js');
 var users = express.Router();
+
+var connectorCtrl = require('./controllers/connector.js');
+var connectors = express.Router();
 
 const app = express();
 
@@ -24,6 +27,8 @@ mongoose.connect('mongodb://localhost:27017/local', function(err, database) {
   }); 
 });
 
+// TODO:  Application Rest API and Public API must be separed !!!
+
 // API - Project
 projects.route('/projects')
   .get(ProjectCtrl.findAll)
@@ -39,10 +44,24 @@ projects.route('/project/:id')
 
 app.use('/api', projects);
 
+
+// Connector
+connectors.route('/connectors')
+  .get(connectorCtrl.findAll)
+  .post(connectorCtrl.create);
+
+//connectors.route('/connector/:id')
+//  .delete(connectorCtrl.delete);
+
+app.use('/api', connectors);
+
 // API - User
 users.route('/users')
   .get(userCtrl.findAll)
   .post(userCtrl.create);
+
+users.route('/user/:email')
+  .get(userCtrl.findByEmail);
 
 app.use('/api', users);
 
