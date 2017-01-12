@@ -3,14 +3,11 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
-var ProjectCtrl = require('./controllers/project.js');
+var ProjectCtrl = require('./controllers/project');
 var projects = express.Router();
 
-var userCtrl = require('./controllers/user.js');
+var userCtrl = require('./controllers/user');
 var users = express.Router();
-
-var connectorCtrl = require('./controllers/connector.js');
-var connectors = express.Router();
 
 const app = express();
 
@@ -22,12 +19,10 @@ mongoose.connect('mongodb://localhost:27017/local', function(err, database) {
     return console.log(err);
   }
 
-  app.listen(3000, function (){
+  app.listen(6000, function (){
     console.log('Listening on port 3000');
   }); 
 });
-
-// TODO:  Application Rest API and Public API must be separed !!!
 
 // API - Project
 projects.route('/projects')
@@ -43,17 +38,6 @@ projects.route('/project/:id')
   .delete(ProjectCtrl.delete);
 
 app.use('/api', projects);
-
-
-// Connector
-connectors.route('/connectors')
-  .get(connectorCtrl.findAll)
-  .post(connectorCtrl.create);
-
-//connectors.route('/connector/:id')
-//  .delete(connectorCtrl.delete);
-
-app.use('/api', connectors);
 
 // API - User
 users.route('/users')
