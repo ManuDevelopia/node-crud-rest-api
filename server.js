@@ -17,14 +17,14 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/local', function(err, database) {
+mongoose.connect('mongodb://heroku_s3c3ctz3:628bmaat4j5icjlm5cqe2qbseo@ds111589.mlab.com:11589/heroku_s3c3ctz3', function(err, database) {
   if (err){
     return console.log(err);
   }
 
   app.listen(3000, function (){
     console.log('Listening on port 3000');
-  }); 
+  });
 });
 
 // TODO:  Application Rest API and Public API must be separed !!!
@@ -69,7 +69,7 @@ app.use('/api', users);
 // Main
 app.get('/api', function (req, res) {
   res.send({
-    app: 'node-test', 
+    app: 'node-test',
     ver: '0.1.0',
     author: '@manudevelopia'
   });
