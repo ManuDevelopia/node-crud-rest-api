@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
-var ProjectCtrl = require('./controllers/project');
+var projectCtrl = require('./controllers/project.js');
 var projects = express.Router();
 
 var userCtrl = require('./controllers/user');
@@ -11,28 +11,46 @@ var users = express.Router();
 
 const app = express();
 
+// Port config
+app.set('port', (process.env.PORT || 5000));
+
+// DB
+var localhostDb = 'mongodb://localhost:27017/local';
+var deployDb = 'mongodb://heroku_s3c3ctz3:628bmaat4j5icjlm5cqe2qbseo@ds111589.mlab.com:11589/heroku_s3c3ctz3';
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/local', function(err, database) {
+mongoose.connect(localhostDb, function(err, database) {
   if (err){
     return console.log(err);
   }
 
+<<<<<<< HEAD
   app.listen(6000, function (){
+=======
+  app.listen(app.get('port'), function (){
+>>>>>>> 146ad6f9be12131cd9348d615264fd25733b8872
     console.log('Listening on port 3000');
-  }); 
+  });
 });
 
+<<<<<<< HEAD
 // API - Project
+=======
+// Routes
+
+// Project
+>>>>>>> 146ad6f9be12131cd9348d615264fd25733b8872
 projects.route('/projects')
-  .get(ProjectCtrl.findAll)
-  .post(ProjectCtrl.create);
+  .get(projectCtrl.findAll)
+  .post(projectCtrl.create);
 
 projects.route('/projects/:name')
-  .get(ProjectCtrl.findByName);
+  .get(projectCtrl.findByName);
 
 projects.route('/project/:id')
+<<<<<<< HEAD
   .get(ProjectCtrl.findById)
   .put(ProjectCtrl.update)
   .delete(ProjectCtrl.delete);
@@ -40,6 +58,21 @@ projects.route('/project/:id')
 app.use('/api', projects);
 
 // API - User
+=======
+  .get(projectCtrl.findById)
+  .put(projectCtrl.update)
+  .delete(projectCtrl.delete);
+
+// Connector
+connectors.route('/connectors')
+  .get(connectorCtrl.findAll)
+  .post(connectorCtrl.create);
+
+connectors.route('/connector/:id')
+  .delete(connectorCtrl.delete);
+
+// User
+>>>>>>> 146ad6f9be12131cd9348d615264fd25733b8872
 users.route('/users')
   .get(userCtrl.findAll)
   .post(userCtrl.create);
@@ -47,15 +80,21 @@ users.route('/users')
 users.route('/user/:email')
   .get(userCtrl.findByEmail);
 
+
+// Endpoints
+app.use('/api', projects);
+app.use('/api', connectors);
 app.use('/api', users);
 
 
 // Main
-app.get('/api', function (req, res) {
+app.get('/', function (req, res) {
   res.send({
-    app: 'node-test', 
+    app: 'node-test',
     ver: '0.1.0',
-    author: '@manudevelopia'
+    author: '@manudevelopia',
+    github: 'http://',
+    heroku: 'http://'
   });
 
 });
