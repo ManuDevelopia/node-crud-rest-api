@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var Connector = require('../models/connector')
+var Connector = require('../models/connector');
 
 // GET All Conncetors
 exports.findAll = function(req, res){
@@ -22,5 +22,18 @@ exports.create = function(req, res){
     }
 
     res.status(200).jsonp(connector);
+  });
+};
+
+// DELETE Delete a Project
+exports.delete = function (req, res) {
+  Connector.findById(req.params.id, function (err, connector) {
+    connector.remove(function (err, connector) {
+      if (err) {
+        return res.send(500, err.message);
+      }
+
+      res.status(200).jsonp(connector);
+    });
   });
 };

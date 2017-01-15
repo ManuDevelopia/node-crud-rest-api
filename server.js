@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
-var ProjectCtrl = require('./controllers/project.js');
+var projectCtrl = require('./controllers/project.js');
 var projects = express.Router();
 
 var userCtrl = require('./controllers/user.js');
@@ -14,12 +14,17 @@ var connectors = express.Router();
 
 const app = express();
 
+// Port config
 app.set('port', (process.env.PORT || 5000));
+
+// DB
+var localhostDb = 'mongodb://localhost:27017/local';
+var deployDb = 'mongodb://heroku_s3c3ctz3:628bmaat4j5icjlm5cqe2qbseo@ds111589.mlab.com:11589/heroku_s3c3ctz3';
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://heroku_s3c3ctz3:628bmaat4j5icjlm5cqe2qbseo@ds111589.mlab.com:11589/heroku_s3c3ctz3', function(err, database) {
+mongoose.connect(localhostDb, function(err, database) {
   if (err){
     return console.log(err);
   }
@@ -29,35 +34,30 @@ mongoose.connect('mongodb://heroku_s3c3ctz3:628bmaat4j5icjlm5cqe2qbseo@ds111589.
   });
 });
 
-// TODO:  Application Rest API and Public API must be separed !!!
+// Routes
 
-// API - Project
+// Project
 projects.route('/projects')
-  .get(ProjectCtrl.findAll)
-  .post(ProjectCtrl.create);
+  .get(projectCtrl.findAll)
+  .post(projectCtrl.create);
 
 projects.route('/projects/:name')
-  .get(ProjectCtrl.findByName);
+  .get(projectCtrl.findByName);
 
 projects.route('/project/:id')
-  .get(ProjectCtrl.findById)
-  .put(ProjectCtrl.update)
-  .delete(ProjectCtrl.delete);
-
-app.use('/api', projects);
-
+  .get(projectCtrl.findById)
+  .put(projectCtrl.update)
+  .delete(projectCtrl.delete);
 
 // Connector
 connectors.route('/connectors')
   .get(connectorCtrl.findAll)
   .post(connectorCtrl.create);
 
-//connectors.route('/connector/:id')
-//  .delete(connectorCtrl.delete);
+connectors.route('/connector/:id')
+  .delete(connectorCtrl.delete);
 
-app.use('/api', connectors);
-
-// API - User
+// User
 users.route('/users')
   .get(userCtrl.findAll)
   .post(userCtrl.create);
@@ -65,15 +65,21 @@ users.route('/users')
 users.route('/user/:email')
   .get(userCtrl.findByEmail);
 
+
+// Endpoints
+app.use('/api', projects);
+app.use('/api', connectors);
 app.use('/api', users);
 
 
 // Main
-app.get('/api', function (req, res) {
+app.get('/', function (req, res) {
   res.send({
     app: 'node-test',
     ver: '0.1.0',
-    author: '@manudevelopia'
+    author: '@manudevelopia',
+    github: 'http://',
+    heroku: 'http://'
   });
 
 });

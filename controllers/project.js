@@ -67,15 +67,14 @@ exports.update = function(req, res){
 };
 
 // DELETE Delete a Project
-exports.delete = function(req, res){
-  Project.findById(req.params.id, function(err, project){
-  
-    project.remove(function(err, project){
-    if (err){
-      return res.send(500, err.message);
-    }
-    
-    res.status(200).jsonp(project);
+exports.delete = function (req, res) {
+  Project.findById(req.params.id, function (err, project) {
+    project.remove(function (err, project) {
+      if (err) {
+        return res.send(500, err.message);
+      }
+
+      res.status(200).jsonp(project);
     });
   });
 };
