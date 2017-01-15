@@ -14,6 +14,8 @@ var connectors = express.Router();
 
 const app = express();
 
+app.set('port', (process.env.PORT || 5000));
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
@@ -22,7 +24,7 @@ mongoose.connect('mongodb://heroku_s3c3ctz3:628bmaat4j5icjlm5cqe2qbseo@ds111589.
     return console.log(err);
   }
 
-  app.listen(3000, function (){
+  app.listen(app.get('port'), function (){
     console.log('Listening on port 3000');
   });
 });
