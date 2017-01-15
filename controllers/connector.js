@@ -1,8 +1,9 @@
+//noinspection JSUnusedLocalSymbols
 var mongoose = require('mongoose');
 
 var Connector = require('../models/connector');
 
-// GET All Conncetors
+// GET All Connectors
 exports.findAll = function(req, res){
   Connector.find(function(req, connector){
     res.status(200).jsonp(connector);

@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
+
 
 // Models
 var Project = require('../models/project');
 var User = require('../models/user');
 
-// GET all Projects from Databse
+// GET all Projects from Database
 exports.findAll = function(req, res){
   Project.find(function(req, projects){
     res.status(200).jsonp(projects);
