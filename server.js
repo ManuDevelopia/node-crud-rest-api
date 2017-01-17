@@ -6,8 +6,11 @@ const mongoose = require('mongoose');
 var projectCtrl = require('./controllers/project.js');
 var projects = express.Router();
 
-var userCtrl = require('./controllers/user');
+var userCtrl = require('./controllers/user.js');
 var users = express.Router();
+
+var connectorCtrl = require('./controllers/connector.js');
+var connectors = express.Router();
 
 const app = express();
 
@@ -26,22 +29,14 @@ mongoose.connect(localhostDb, function(err, database) {
     return console.log(err);
   }
 
-<<<<<<< HEAD
-  app.listen(6000, function (){
-=======
   app.listen(app.get('port'), function (){
->>>>>>> 146ad6f9be12131cd9348d615264fd25733b8872
-    console.log('Listening on port 3000');
+    console.log('Listening on port ' + app.get('port'));
   });
 });
 
-<<<<<<< HEAD
-// API - Project
-=======
 // Routes
 
 // Project
->>>>>>> 146ad6f9be12131cd9348d615264fd25733b8872
 projects.route('/projects')
   .get(projectCtrl.findAll)
   .post(projectCtrl.create);
@@ -50,15 +45,6 @@ projects.route('/projects/:name')
   .get(projectCtrl.findByName);
 
 projects.route('/project/:id')
-<<<<<<< HEAD
-  .get(ProjectCtrl.findById)
-  .put(ProjectCtrl.update)
-  .delete(ProjectCtrl.delete);
-
-app.use('/api', projects);
-
-// API - User
-=======
   .get(projectCtrl.findById)
   .put(projectCtrl.update)
   .delete(projectCtrl.delete);
@@ -72,7 +58,6 @@ connectors.route('/connector/:id')
   .delete(connectorCtrl.delete);
 
 // User
->>>>>>> 146ad6f9be12131cd9348d615264fd25733b8872
 users.route('/users')
   .get(userCtrl.findAll)
   .post(userCtrl.create);
