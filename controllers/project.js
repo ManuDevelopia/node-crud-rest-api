@@ -3,6 +3,7 @@
 // Models
 var Project = require('../models/project');
 var User = require('../models/user');
+var Connector = require('../models/connector');
 
 // GET all Projects from Database
 exports.findAll = function(req, res){
@@ -13,9 +14,22 @@ exports.findAll = function(req, res){
 
 // POST create a new Project
 exports.create = function(req, res){
+ // TODO: remove this harcode
+  var connectorArray = [];
+  var connector = new Connector({
+      name: 'Connector 1',
+      endpoint: 'http://connector.es/api/project'
+    });
+
+   connectorArray.push(connector);
+  connectorArray.push(connector);
+  connectorArray.push(connector);
+    
   var project = new Project({
     name: req.body.name,
-    user: '586aa3dbbf8eaf0bfb99459b'
+    user: '586aa3dbbf8eaf0bfb99459b',
+    url: req.body.url,
+    connectors: connectorArray
   });
 
   project.save(function (err, project){
@@ -60,7 +74,7 @@ exports.update = function(req, res){
       return res.send(500, err.message);
     }
 
-    res.send(200).jsonp(project);
+    res.sendStatus(200);
     });
   });
 
