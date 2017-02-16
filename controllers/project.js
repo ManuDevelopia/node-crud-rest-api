@@ -16,18 +16,31 @@ exports.findAll = function(req, res){
 exports.create = function(req, res){
  // TODO: remove this harcode
   var connectorArray = [];
-  var connector = new Connector({
+  var connector1 = new Connector({
       name: 'Connector 1',
-      endpoint: 'http://connector.es/api/project'
+      endpoint: 'http://connector.es/api/project1'
     });
-
-   connectorArray.push(connector);
-  connectorArray.push(connector);
-  connectorArray.push(connector);
+  connector1.save();
+  var connector2 = new Connector({
+      name: 'Connector 2',
+      endpoint: 'http://connector.es/api/project2'
+    });
+  connector1.save();
+  var connector3 = new Connector({
+      name: 'Connector 3',
+      endpoint: 'http://connector.es/api/project3'
+    });
+  connector1.save(); 
+  connector2.save(); 
+  connector3.save(); 
+  
+  connectorArray.push(connector1);
+  connectorArray.push(connector2);
+  connectorArray.push(connector3);
     
   var project = new Project({
     name: req.body.name,
-    user: '586aa3dbbf8eaf0bfb99459b',
+    user: '58a49a5eb8929469ea88927a',
     url: req.body.url,
     connectors: connectorArray
   });

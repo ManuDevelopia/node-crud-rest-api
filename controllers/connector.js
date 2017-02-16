@@ -10,6 +10,17 @@ exports.findAll = function(req, res){
   });
 };
 
+// GET Project by ID
+exports.findById = function(req, res){
+  Connector.findById(req.params.id, function(err, connector){
+    if (err){
+      return res.send(500, err.message);
+    }
+    
+    res.status(200).jsonp(connector);
+  });
+};
+
 // POST Create a new Connector
 exports.create = function(req, res){
   var connector = new Connector({
