@@ -67,6 +67,9 @@ connectors.route('/connectors')
   .post(connectorCtrl.create);
 
 connectors.route('/connector/:id')
+  .get(connectorCtrl.findById);
+
+connectors.route('/connector/:id')
   .delete(connectorCtrl.delete);
 
 // User
