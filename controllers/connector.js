@@ -37,6 +37,22 @@ exports.create = function(req, res){
   });
 };
 
+// PUT Updates a Project
+exports.update = function(req, res){
+  Connector.findById(req.params.id, function(err, connector){
+    connector.name = req.body.name;
+
+    connector.save(function(err, project){
+      if (err){
+        return res.send(500, err.message);
+      }
+
+      res.sendStatus(200);
+    });
+  });
+}
+
+
 // DELETE Delete a Project
 exports.delete = function (req, res) {
   Connector.findById(req.params.id, function (err, connector) {
