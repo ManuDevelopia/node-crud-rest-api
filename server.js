@@ -70,6 +70,7 @@ connectors.route('/connector/:id')
   .get(connectorCtrl.findById);
 
 connectors.route('/connector/:id')
+  .put(connectorCtrl.update)
   .delete(connectorCtrl.delete);
 
 // User
