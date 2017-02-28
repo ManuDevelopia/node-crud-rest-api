@@ -67,9 +67,7 @@ connectors.route('/connectors')
   .post(connectorCtrl.create);
 
 connectors.route('/connector/:id')
-  .get(connectorCtrl.findById);
-
-connectors.route('/connector/:id')
+  .get(connectorCtrl.findById)
   .put(connectorCtrl.update)
   .delete(connectorCtrl.delete);
 
@@ -78,8 +76,10 @@ users.route('/users')
   .get(userCtrl.findAll)
   .post(userCtrl.create);
 
-users.route('/user/:email')
-  .get(userCtrl.findByEmail);
+users.route('/user/:id')
+  .get(userCtrl.findById)
+  .put(userCtrl.update)
+  .delete(userCtrl.delete);
 
 
 // Endpoints
