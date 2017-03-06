@@ -40,7 +40,7 @@ exports.create = function(req, res){
     
   var project = new Project({
     name: req.body.name,
-    user: '58a49a5eb8929469ea88927a',
+    user: req.body.user,
     url: req.body.url,
     connectors: connectorArray
   });
@@ -56,14 +56,16 @@ exports.create = function(req, res){
 
 // GET Project by ID
 exports.findById = function(req, res){
-  Project.findById(req.params.id, function(err, project){
-    if (err){
-      return res.send(500, err.message);
-    }
-    User.populate(project, {path: 'user'}, function(err, project){
+  Project.findById({_id: req.params.id})
+    .populate('user')
+    .populate('connectors')
+    .exec(function(err, project){
+      if (err){
+        return res.send(500, err.message);
+      }
+      
       res.status(200).jsonp(project);
-    }); 
-  });
+    })
 };
 
 // GET Project by name
