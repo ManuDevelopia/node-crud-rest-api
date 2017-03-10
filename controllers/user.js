@@ -28,6 +28,23 @@ exports.findByEmail = function(req, res){
   });
 };
 
+
+// POST Update a User
+exports.update = function(req, res){
+  User.findById(req.params.id, function(err, user){
+    user.name = req.body.name;
+  
+    user.save(function(err, user){
+    if (err){
+      return res.send(500, err.message);
+    }
+
+    res.sendStatus(200);
+    });
+  });
+
+};
+
 // POST Create User
 exports.create = function(req, res){
   var user = new User({
@@ -45,5 +62,18 @@ exports.create = function(req, res){
     }
 
     res.status(200).jsonp(user);
+  });
+};
+
+// DELETE Delete a User
+exports.delete = function (req, res) {
+  User.findById(req.params.id, function (err, user) {
+    user.remove(function (err, user) {
+      if (err) {
+        return res.send(500, err.message);
+      }
+
+      res.status(200).jsonp(user);
+    });
   });
 };
