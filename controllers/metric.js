@@ -12,7 +12,7 @@ exports.findById = function(req, res){
     if (err){
       return res.send(500, err.message);
     }
-  
+
     res.status(200).jsonp(metric);
   });
 };
@@ -23,7 +23,7 @@ exports.findByEmail = function(req, res){
     if (err){
       return res.send(500, err.message);
     }
-  
+
     res.status(200).jsonp(metric);
   });
 };
@@ -33,7 +33,7 @@ exports.findByEmail = function(req, res){
 exports.update = function(req, res){
   Metric.findById(req.params.id, function(err, metric){
     metric.name = req.body.name;
-  
+
     metric.save(function(err, metric){
     if (err){
       return res.send(500, err.message);

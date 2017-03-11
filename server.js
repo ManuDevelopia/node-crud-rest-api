@@ -1,7 +1,7 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+var express = require('express');
+var bodyParser = require('body-parser');
 
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
 var projectCtrl = require('./controllers/project.js');
 var projects = express.Router();
@@ -15,7 +15,7 @@ var connectors = express.Router();
 var metricCtrl = require('./controllers/metric.js');
 var metrics = express.Router();
 
-const app = express();
+var app = express();
 
 // Port config
 app.set('port', (process.env.PORT || 5000));
@@ -27,7 +27,7 @@ var deployDb = 'mongodb://heroku_s3c3ctz3:628bmaat4j5icjlm5cqe2qbseo@ds111589.ml
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-mongoose.connect(deployDb, function(err, database) {
+mongoose.connect(localhostDb, function(err, database) {
   if (err){
     return console.log(err);
   }
@@ -94,7 +94,7 @@ metrics.route('/metric/:id')
   .put(metricCtrl.update)
   .delete(metricCtrl.delete);
 
-  
+
 // Endpoints
 app.use('/api', projects);
 app.use('/api', connectors);

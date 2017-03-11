@@ -14,35 +14,10 @@ exports.findAll = function(req, res){
 
 // POST create a new Project
 exports.create = function(req, res){
- // TODO: remove this harcode
-  var connectorArray = [];
-  var connector1 = new Connector({
-      name: 'Connector 1',
-      endpoint: 'http://connector.es/api/project1'
-    });
-  connector1.save();
-  var connector2 = new Connector({
-      name: 'Connector 2',
-      endpoint: 'http://connector.es/api/project2'
-    });
-  connector1.save();
-  var connector3 = new Connector({
-      name: 'Connector 3',
-      endpoint: 'http://connector.es/api/project3'
-    });
-  connector1.save(); 
-  connector2.save(); 
-  connector3.save(); 
-  
-  connectorArray.push(connector1);
-  connectorArray.push(connector2);
-  connectorArray.push(connector3);
-    
   var project = new Project({
     name: req.body.name,
     user: req.body.user,
-    url: req.body.url,
-    connectors: connectorArray
+    url: req.body.url
   });
 
   project.save(function (err, project){
@@ -52,7 +27,7 @@ exports.create = function(req, res){
 
     res.status(200).jsonp(project);
   });
-}; 
+};
 
 // GET Project by ID
 exports.findById = function(req, res){
@@ -63,9 +38,9 @@ exports.findById = function(req, res){
       if (err){
         return res.send(500, err.message);
       }
-      
+
       res.status(200).jsonp(project);
-    })
+    });
 };
 
 // GET Project by name
@@ -83,7 +58,8 @@ exports.findByName = function(req, res){
 exports.update = function(req, res){
   Project.findById(req.params.id, function(err, project){
     project.name = req.body.name;
-  
+    project.connectors = req.body.connectors;
+
     project.save(function(err, project){
     if (err){
       return res.send(500, err.message);
