@@ -17,9 +17,9 @@ exports.findById = function(req, res){
   });
 };
 
-// GET Metric by email
-exports.findByEmail = function(req, res){
-  Metric.findById({email: req.params.email}, function(err, metric){
+// GET Metric by Name
+exports.findByName = function(req, res){
+  Metric.findById({name: req.params.name}, function(err, metric){
     if (err){
       return res.send(500, err.message);
     }

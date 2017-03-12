@@ -33,7 +33,12 @@ exports.create = function(req, res){
 exports.findById = function(req, res){
   Project.findById({_id: req.params.id})
     .populate('user')
-    .populate('connectors')
+    .populate({
+      path: 'connectors',
+      populate: {
+        path: 'metrics'
+      }
+    })
     .exec(function(err, project){
       if (err){
         return res.send(500, err.message);

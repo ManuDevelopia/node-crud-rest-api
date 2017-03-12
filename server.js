@@ -27,7 +27,7 @@ var deployDb = 'mongodb://heroku_s3c3ctz3:628bmaat4j5icjlm5cqe2qbseo@ds111589.ml
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-mongoose.connect(deployDb, function(err, database) {
+mongoose.connect(localhostDb, function(err, database) {
   if (err){
     return console.log(err);
   }
