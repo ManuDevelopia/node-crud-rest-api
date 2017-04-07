@@ -15,6 +15,9 @@ var connectors = express.Router();
 var metricCtrl = require('./controllers/metric.js');
 var metrics = express.Router();
 
+var stateCtrl = require('./controllers/state.js');
+var states = express.Router();
+
 var app = express();
 
 // Port config
@@ -94,12 +97,23 @@ metrics.route('/metric/:id')
   .put(metricCtrl.update)
   .delete(metricCtrl.delete);
 
+// State
+states.route('/states')
+  .get(stateCtrl.findAll)
+  .post(stateCtrl.create);
+
+states.route('/state/:id')
+  .get(stateCtrl.findById)
+  .put(stateCtrl.update)
+  .delete(stateCtrl.delete);
+
 
 // Endpoints
 app.use('/api', projects);
 app.use('/api', connectors);
 app.use('/api', metrics);
 app.use('/api', users);
+app.use('/api', states);
 
 
 // Main

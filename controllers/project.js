@@ -61,10 +61,13 @@ exports.findByName = function(req, res){
 
 // POST Update a Project
 exports.update = function(req, res){
+
   Project.findById(req.params.id, function(err, project){
     project.name = req.body.name;
     project.connectors = req.body.connectors;
+    project.states = req.body.states;
 
+    console.log(project);
     project.save(function(err, project){
     if (err){
       return res.send(500, err.message);
