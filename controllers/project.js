@@ -67,7 +67,6 @@ exports.update = function(req, res){
     project.connectors = req.body.connectors;
     project.states = req.body.states;
 
-    console.log(project);
     project.save(function(err, project){
     if (err){
       return res.send(500, err.message);
