@@ -27,9 +27,10 @@ exports.findById = function(req, res){
 // POST Create a new State
 exports.create = function(req, res){
   var state = new State({
+    date: new Date(),
     name: req.body.name,
     endpoint: req.body.endpoint,
-    metrics: req.body.metrics
+    connectors: req.body.connectors
   });
 
   state.save(function(err, state){
@@ -46,7 +47,7 @@ exports.update = function(req, res){
   State.findById(req.params.id, function(err, state){
     state.name = req.body.name;
     state.endpoint = req.body.endpoint;
-    state.metrics = req.body.metrics;
+    state.connectors = req.body.connectors;
 
     state.save(function(err, state){
       if (err){

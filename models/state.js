@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 
 var StateSchema = new mongoose.Schema({
+  date: Date,
   name: String,
   endpoint: String,
-  metrics: [{type: mongoose.Schema.Types.ObjectId, ref: 'Metric'}]
+  connectors: [{type: mongoose.Schema.Types.ObjectId, ref: 'Connector'}]
 });
 
 module.exports = mongoose.model('State', StateSchema);

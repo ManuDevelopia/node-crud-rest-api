@@ -39,6 +39,16 @@ exports.findById = function(req, res){
         path: 'metrics'
       }
     })
+    .populate({
+      path: 'states',
+      populate: {
+        path: 'connectors',
+        populate: {
+          path: 'metrics'
+        }
+      }
+    })
+    .populate('states')
     .exec(function(err, project){
       if (err){
         return res.send(500, err.message);
